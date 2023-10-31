@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 
-const subscriptionKey = 'YOUR_AZURE_SUBSCRIPTION_KEY';
-const endpoint = 'YOUR_AZURE_ENDPOINT_URL';  // Deve terminar com '/vision/v4.0/analyze'
+const subscriptionKey = os.environ['YOUR_AZURE_SUBSCRIPTION_KEY'];
+const endpoint = os.environ['ENVIRONMENT_VARIABLE_KEY'];  // Deve terminar com '/vision/v4.0/analyze'
 
 export const analyzeImage = async (imageUrl) => {
     try {

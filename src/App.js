@@ -1,18 +1,37 @@
 import React, { useState } from 'react';
-import { analyzeImage } from './azure-image-analysis';
+import analyzeImage from './analyzeImage';
+
+function DisplayResults({ imageUrl, results }) {
+  if (!results) return null;
+
+  return (
+      <div>
+          <h2>Resultados da Análise:</h2>
+          <img src={imageUrl} alt="Analyzed" width="200" />
+          <pre>{JSON.stringify(results, null, 2)}</pre>
+      </div>
+  );
+}
+
 
 function App() {
-  const [imageUrl, setImageUrl] = useState(''); // Estado para armazenar a URL da imagem
+  const [imageUrl, setImageUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState(null);
+
 
   const handleImageAnalysis = async () => {
+    setIsLoading(true);
     try {
         const result = await analyzeImage(imageUrl);
-        console.log(result);
-        // Trate os resultados conforme necessário
+        setResults(result);
     } catch (error) {
         console.error("Erro ao chamar a API:", error);
+    } finally {
+        setIsLoading(false);
     }
-  };
+};
+
 
   const handleImageGeneration = () => {
     // Lógica para geração de imagem
@@ -32,6 +51,9 @@ function App() {
 
       <button onClick={handleImageAnalysis}>Analisar Imagem</button>
       <button onClick={handleImageGeneration}>Gerar Imagem</button>
+
+      {isLoading && <p>Analisando imagem...</p>}
+      <DisplayResults imageUrl={imageUrl} results={results} />
     </div>
   );
 }
