@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import React from 'react';
+import { analyzeImage } from './azure-image-analysis';
 
 function App() {
   const [imageUrl, setImageUrl] = useState(''); // Estado para armazenar a URL da imagem
 
-  const handleImageAnalysis = () => {
-    // Lógica para análise de imagem
-    console.log('Analisando imagem:', imageUrl);
+  const handleImageAnalysis = async () => {
+    try {
+        const result = await analyzeImage(imageUrl);
+        console.log(result);
+        // Trate os resultados conforme necessário
+    } catch (error) {
+        console.error("Erro ao chamar a API:", error);
+    }
   };
 
   const handleImageGeneration = () => {
