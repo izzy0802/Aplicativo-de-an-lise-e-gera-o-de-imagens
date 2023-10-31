@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import analyzeImage from './analyzeImage';
+import analyzeImage from './azure-image-analysis';
 
 function DisplayResults({ imageUrl, results }) {
   if (!results) return null;
